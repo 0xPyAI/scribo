@@ -1,0 +1,34 @@
+## Build Results & Binaries
+[Bb]in/
+[Oo]bj/
+[Dd]ist/
+publish_*/
+*.exe
+[Ll]og/
+[Ll]ogs/
+app.log
+*.log
+
+## User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+settings.json
+settings.json.tmp
+screen_test.png
+
+## Visual Studio & JetBrains & VS Code
+.vs/
+.vscode/
+.idea/
+*.swp
+*.*~
+
+## Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/

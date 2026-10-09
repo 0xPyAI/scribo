@@ -1,0 +1,99 @@
+<Window x:Class="Scribo.OverlayWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ScriboOverlay"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Topmost="True"
+        ShowInTaskbar="False"
+        WindowStartupLocation="Manual">
+    <Grid x:Name="overlayGrid">
+        <!-- Board Backdrop (Transparent Desktop, Whiteboard, Grid, Ruled, Dots, Greenboard, Frosted) -->
+        <Border x:Name="boardBackdrop" Background="Transparent" Visibility="Collapsed" IsHitTestVisible="False"/>
+
+        <!-- 99.6% transparent background ensures reliable WPF hit-testing when interactive -->
+        <InkCanvas x:Name="inkCanvas"
+                   Background="#01FFFFFF"
+                   PreviewMouseLeftButtonDown="InkCanvas_PreviewMouseDown"
+                   PreviewMouseMove="InkCanvas_PreviewMouseMove"
+                   PreviewMouseLeftButtonUp="InkCanvas_PreviewMouseUp"/>
+
+        <!-- Shape Preview Layer -->
+        <Canvas x:Name="shapePreviewCanvas" IsHitTestVisible="False" Background="Transparent"/>
+
+        <!-- Presentation Spotlight Layer -->
+        <Canvas x:Name="spotlightCanvas" Visibility="Collapsed" IsHitTestVisible="False">
+            <Path x:Name="spotlightPath" Fill="#B8000000">
+                <Path.Data>
+                    <CombinedGeometry GeometryCombineMode="Exclude">
+                        <CombinedGeometry.Geometry1>
+                            <RectangleGeometry x:Name="spotlightScreenRect"/>
+                        </CombinedGeometry.Geometry1>
+                        <CombinedGeometry.Geometry2>
+                            <EllipseGeometry x:Name="spotlightHole" RadiusX="140" RadiusY="140"/>
+                        </CombinedGeometry.Geometry2>
+                    </CombinedGeometry>
+                </Path.Data>
+            </Path>
+            <Ellipse x:Name="spotlightRing" Width="280" Height="280"
+                     Stroke="#FFE600" StrokeThickness="3"
+                     IsHitTestVisible="False"/>
+        </Canvas>
+
+        <!-- Presentation Magnifier / Live Zoom Loupe Layer -->
+        <Canvas x:Name="magnifierCanvas" Visibility="Collapsed" IsHitTestVisible="False">
+            <Border x:Name="magnifierBorder" Width="240" Height="240" CornerRadius="120"
+                    BorderBrush="#0F172A" BorderThickness="3.5" Background="#0F172A">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="20" ShadowDepth="6" Direction="270" Color="#000000" Opacity="0.55"/>
+                </Border.Effect>
+                <Grid ClipToBounds="True">
+                    <Grid.Clip>
+                        <EllipseGeometry Center="116.5,116.5" RadiusX="116.5" RadiusY="116.5"/>
+                    </Grid.Clip>
+                    <Image x:Name="magnifierImage" Stretch="Fill" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    <!-- Target Crosshair -->
+                    <Path Data="M116.5 106.5 L116.5 126.5 M106.5 116.5 L126.5 116.5" Stroke="#A0FFFFFF" StrokeThickness="1.5"/>
+                    <Border HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,14"
+                            Background="#0F172A" CornerRadius="8" Padding="7,2.5">
+                        <TextBlock Text="2× ZOOM" Foreground="#FFE600" FontSize="10.5" FontWeight="ExtraBold"/>
+                    </Border>
+                </Grid>
+            </Border>
+        </Canvas>
+
+        <!-- Cursor Halo & Click Ripple Layer -->
+        <Canvas x:Name="cursorEffectsCanvas" Visibility="Collapsed" IsHitTestVisible="False">
+            <Ellipse x:Name="cursorHalo" Width="44" Height="44"
+                     Fill="#30FFE600" Stroke="#75FFE600" StrokeThickness="2"
+                     IsHitTestVisible="False" Visibility="Collapsed"/>
+            <Ellipse x:Name="clickRipple" Width="20" Height="20"
+                     Stroke="#FFE600" StrokeThickness="3" Fill="Transparent"
+                     IsHitTestVisible="False" Visibility="Collapsed" Opacity="0" RenderTransformOrigin="0.5,0.5">
+                <Ellipse.RenderTransform>
+                    <ScaleTransform x:Name="rippleScale" ScaleX="1.0" ScaleY="1.0"/>
+                </Ellipse.RenderTransform>
+            </Ellipse>
+        </Canvas>
+
+        <!-- Floating Keystroke Visualizer HUD -->
+        <Border x:Name="keystrokeHud" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                Margin="0,0,0,90" Background="#EA0F172A" BorderBrush="#334155" BorderThickness="2"
+                CornerRadius="16" Padding="14,9" Visibility="Collapsed" IsHitTestVisible="False"
+                Opacity="0">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="24" ShadowDepth="6" Direction="270" Color="#000000" Opacity="0.45"/>
+            </Border.Effect>
+            <StackPanel x:Name="keystrokeBadgesPanel" Orientation="Horizontal" VerticalAlignment="Center"/>
+        </Border>
+
+        <!-- Exclusion zone overlay: this rectangle sits on top and blocks drawing over the toolbar -->
+        <Border x:Name="exclusionBorder"
+                Background="Transparent"
+                IsHitTestVisible="False"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Visibility="Collapsed"/>
+    </Grid>
+</Window>
