@@ -8,6 +8,10 @@
 
 **Scribo** is a high-performance, 100% native Windows desktop screen annotation, whiteboard, and presentation suite built in **C# (.NET 9) & WPF**.
 
+<p align="center">
+  <img src="assets/toolbar-preview.png" alt="Scribo Toolbar GUI Preview" width="850"/>
+</p>
+
 ---
 
 ## ⚡ Quick Download
@@ -16,6 +20,7 @@ You don't need to install build tools or compile anything to use Scribo:
 
 * 📦 **[Download Full Working Package (Zip)](https://github.com/0xPyAI/scribo/releases/download/v1.0.0/Scribo-v1.0.0-win-x64-Full-Package.zip)** *(Recommended — 58 MB)*  
   Complete self-contained folder with all runtime libraries, WPF dependencies, `icon/` assets, and `run.bat` launcher. **Works out-of-the-box on any Windows 10/11 PC with zero prerequisites.** Just extract and launch!
+* 🚀 **[Download Standalone Binary (Scribo.exe)](https://github.com/0xPyAI/scribo/releases/download/v1.0.0/Scribo.exe)** *(473 KB)*  
   For machines with [.NET 9 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/9.0) already installed.
 * 🏷️ **[View All Releases on GitHub](https://github.com/0xPyAI/scribo/releases/latest)**
 
